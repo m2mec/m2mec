@@ -1,0 +1,174 @@
+title: M2 MECH 0.0.1 Schema
+$schema: http://json-schema.org/draft-08/schema#
+description: Schema for Machine to Machine Event Context Handler - M2 Mech
+type: object
+required:
+  - m2mech
+  - id
+  - status
+properties:
+  m2mech:
+    type: string
+    enum:
+      - 0.0.1
+    description: M2 MECH Version implemented by this document
+  id:
+    type: string
+    description: A unique identifier for this Event Context Handler bundle
+  status:
+    type: string
+    enum:
+      - enabled
+      - disabled
+      - drop
+info:
+  $ref: '#/definitions/info'
+event:
+  $ref: '#/definitions/event'
+processors:
+  $ref: '#/definitions/processors'
+contextHandlers:
+  type: array
+  items:
+    $ref: '#/definitions/contextHandlers'
+extensions:
+  type: array
+  items:
+    $ref: '#/definitions/extensions'
+definitions:
+  info:
+    type: object
+    required:
+      - title
+      - version
+    properties:
+      title:
+        type: string
+      version:
+        type: string
+  event:
+    type: object
+    required:
+      - eventTypeId
+      - eventName
+    properties:
+      eventTypeId:
+        type: string
+      eventName:
+        type: string
+      description:
+        type: string
+  handlers:
+    logging:
+      loglevel:
+        type: string
+        enum:
+          - none
+          - error
+          - warning
+          - info
+          - debug
+      rententionPeriod:
+        type: integer
+        default: 90
+    classification:
+      classified:
+        type: string
+        enum:
+          - public
+          - internal
+          - confidential
+          - restricted
+    caching:
+      cacheAble:
+        type: boolean
+        enum:
+          - true
+          - false
+    ttl:
+      validFor:
+        type: integer
+      validUntil:
+        type: date-time
+    failure:
+      retryInterval:
+        type: integer
+        default: 90
+      retryAttempts:
+        type: integer
+        default: 3
+      retryExhausted:
+        type: string
+        enum:
+          - retry
+          - DLQ
+          - drop
+          - halt
+
+    ordering:
+      orderType:
+        type: string
+        enum:
+          - none
+          - fifo
+          - lifo
+          - grouped
+      groupBy:
+        type: string
+        
+    range:
+      processFrom:
+        type: string
+      processTo:
+        type: string
+
+  processors:
+    type: object
+    required:
+      - processorIdentifier
+      - processorGroup
+    properties:
+      processorIdentifier:
+        type: string
+      processorGroup:
+        type: string
+
+  contextHandlers:
+    type: object
+    required:
+      - handlerId
+      - handlerStatus
+      - handler
+    properties:
+      handlerId:
+        type: string
+      handlerStatus:
+        type: string
+        enum:
+          - enabled
+          - disabled
+      handler:
+        type: object
+        oneOf:
+          - $ref: '#/definitions/handlers/logging'
+          - $ref: '#/definitions/handlers/classification'
+          - $ref: '#/definitions/handlers/caching'
+          - $ref: '#/definitions/handlers/ttl'
+          - $ref: '#/definitions/handlers/failure'
+          - $ref: '#/definitions/handlers/ordering'
+          - $ref: '#/definitions/handlers/range'
+
+  extensions:
+    type: object
+    description: Custom extensions identifed in reverse dns format
+    required:
+      - extensionId
+      - description
+      - extension
+    properties:
+      extensionId:
+        type: string
+      description:
+        type: string
+      extension:
+        type: string

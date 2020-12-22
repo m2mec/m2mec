@@ -1,0 +1,36 @@
+m2mech: 0.0.1
+id: coa-sample-doc.m2def.m2mec.com
+status: enabled
+info:
+  title: Example M2 definition - This is the version for this processor/event
+  version: 1.0.0
+event:
+  eventTypeId: 12345
+  eventName: changeOfAddress
+processors:
+  processorIdentifier: sample-service.micro-service.com
+  processorGroup: testGroup
+contextHandlers:
+  - handlerId: 111111
+    handlerStatus: enabled
+    handler: logging
+    logging:
+      loglevel: info
+      rententionPeriod: 60
+  - handlerId: 222222
+    handlerStatus: disabled
+    handler: classification
+    classification:
+      classified: confidential
+  - handlerId: 1212
+    handlerStatus: enabled
+    handler: failure
+    failure:
+      retryInterval: 600
+      retryAttempts: 5
+      retryExhausted: DLQ
+
+extensions:
+  - extenstionId: amazon-state-language.mytest.bigco.com
+    description: State control
+    extension: "Note this would be the embedded state language definition"
