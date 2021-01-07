@@ -46,6 +46,10 @@ definitions:
         type: string
       version:
         type: string
+      contact:
+        type: string
+      description:
+        type: string
   event:
     type: object
     required:
