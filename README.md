@@ -10,6 +10,10 @@ An M2 document can be applied by either a single named EP, via its name or name 
 
 Historically with event driven architectures no common language has existed for expressing how an EP should handle an event, leaving this knowledge to be captured in plain text documentation or based on a developers understanding at that point in time. M2 enables events at scale, across countless event processors to have context applied in a consistent way. Further details on [M2 Mec](https://m2mec.com)
 
+### Core Handlers
+
+As part of the M2 Specification common event handler configurations have been defined, these are aligned to some of the most common concerns and include logging, data classification, caching, event TTL, failure handling, event ordering and event range. In addition to the core handlers the specification supports custom extensions to enable enterprise level specific features to be introduced.
+
 ### M2 Mec Specification
 
 The M2 Mec Specification schema is structured as follows (this is based on the [COA example](https://github.com/m2mec/m2mec/blob/main/examples/v0.1/m2-example.yaml)),
