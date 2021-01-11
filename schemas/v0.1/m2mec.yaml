@@ -104,7 +104,6 @@ definitions:
       retryExhausted:
         type: string
         enum:
-          - retry
           - DLQ
           - drop
           - halt
